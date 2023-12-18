@@ -136,6 +136,7 @@ bool tcp_init_server()
 
 long wait_id_from_conn()
 {
+	int retval = 0;
 	char buffer[srv_BUFMAX] = {};
 	socklen_t len = sizeof(cli); 
 
@@ -152,15 +153,19 @@ long wait_id_from_conn()
 		long identificator = 0;
 		char *id = buffer+5;
 		identificator = atol(id);
-		if(identificator>0) {
-			return(identificator);
-		} else {
-			return(0);
+		if(identificator>0)
+		{
+			retval = identificator;
+		}
+		else
+		{
+			retval = 0;
 		}
 		
-	} if(strncasecmp(buffer,"QUIT",4)==0)
+	}
+	else if(strncasecmp(buffer,"QUIT",4)==0)
 	{
-		return -1;
+		retval = -1;
 	}
 	else
 	{
@@ -169,7 +174,7 @@ long wait_id_from_conn()
 
 	close(conn_fd);
 
-	return 0;
+	return retval;
 }
 
 /** END of TCP mod --------------------------------------- **/
