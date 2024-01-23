@@ -5,7 +5,7 @@ Modified librtlsdr (*rtl_sdr* command) to enable seamless switching of frequency
 This is based on the async_rearrangement branch of librtlsdr.
 
 The librtlsdr-2freq-tcp mod includes a simple TCP server which, by default, listens to TCP connections on port 4500 by default. Change port number with the command line parameter -P.
-To trigger a recording, a remote client sends tdoa:<id>, for example tdoa:12345, which starts the capture using the preset parameters and saves the output to <id>.dat, or 12345.dat using the example.
+To trigger a recording, a remote client sends tdoa:id, for example tdoa:12345, which starts the capture using the preset parameters and saves the output to id.dat, or 12345.dat using the example.
 
 This lib enables TDOA localization with RTL-SDRs, when a reference transmitter is used for synchronization. More information:
 <http://www.panoradio-sdr.de/tdoa-transmitter-localization-with-rtl-sdrs/>
