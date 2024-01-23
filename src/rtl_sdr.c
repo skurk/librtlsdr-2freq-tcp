@@ -66,10 +66,10 @@ static int frequency_changed = 0;
 static int frequency_changed_back = 0;
 uint32_t frequency1 = 100000000;
 uint32_t frequency2 = 100000000;
+int tcp_port = 4500;
 
 /** START of TCP mod ------------------------------------------ **/
 
-#define srv_PORT 4500 
 #define srv_BUFMAX 256
 
 static bool server_loop = true;
@@ -111,7 +111,7 @@ bool tcp_init_server()
    
 	servaddr.sin_family = AF_INET; 
 	servaddr.sin_addr.s_addr = htonl(INADDR_ANY); 
-	servaddr.sin_port = htons(srv_PORT); 
+	servaddr.sin_port = htons(tcp_port); 
    
 	if ((bind(srv_fd, (struct sockaddr*)&servaddr, sizeof(servaddr))) != 0)
 	{ 
@@ -127,7 +127,7 @@ bool tcp_init_server()
 		return false;
 	} 
    
-        printf("Ready to accept TCP on port %d to trigger recording\n", srv_PORT); 
+        printf("Ready to accept TCP on port %d to trigger recording\n", tcp_port); 
 
 	return true;
 }
@@ -193,6 +193,7 @@ void usage(void)
 		"\t[-d device_index (default: 0)]\n"
 		"\t[-g gain (default: 0 for auto)]\n"
 		"\t[-p ppm_error (default: 0)]\n"
+		"\t[-P tcp listen port (default: 4500)]\n"
 		"\t[-b output_block_size (default: 16 * 16384)]\n"
 		"\t[-n number n of IQ samples to read per frequency (total length = 3x specified)(default: 2e6)]\n"
 		"\t[-S force sync output (default: async)]\n"
@@ -301,6 +302,9 @@ int main(int argc, char **argv)
 			break;
 		case 'p':
 			ppm_error = atoi(optarg);
+			break;
+		case 'P':
+			tcp_port = atoi(optarg);
 			break;
 		case 'b':
 			out_block_size = (uint32_t)atof(optarg);
