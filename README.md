@@ -4,7 +4,7 @@
 Modified librtlsdr (*rtl_sdr* command) to enable seamless switching of frequency during reception.
 This is based on the async_rearrangement branch of librtlsdr.
 
-The librtlsdr-2freq-tcp mod includes a simple TCP server which, by default, listens to TCP connections on port 4500.
+The librtlsdr-2freq-tcp mod includes a simple TCP server which, by default, listens to TCP connections on port 4500 by default. Change port number with the command line parameter -P.
 To trigger a recording, a remote client sends tdoa:<id>, for example tdoa:12345, which starts the capture using the preset parameters and saves the output to <id>.dat, or 12345.dat using the example.
 
 This lib enables TDOA localization with RTL-SDRs, when a reference transmitter is used for synchronization. More information:
@@ -12,9 +12,9 @@ This lib enables TDOA localization with RTL-SDRs, when a reference transmitter i
 
 
 ## Usage
-*rtl_sdr -f <frequency 1> -h <frequency 2> -n <num_samples>
+*rtl_sdr -f <frequency 1> -h <frequency 2> -n <num_samples> [-P <tcp_port>]
 
-receives first <num_samples> IQ samples at <frequency 1> (in Hz), then <num_samples> IQ samples at <frequency 2>, then again <num_samples> at <frequency 1> without interruption. For help and more options type *rtl_sdr*.
+Awaits TCP connection and command to trigger recording. Then, it receives the first <num_samples> IQ samples at <frequency 1> (in Hz), followed by <num_samples> IQ samples at <frequency 2>, and finally <num_samples> at <frequency 1> without interruption. For help and more options type *rtl_sdr*.
 
 Example Usage:
 *rtl_sdr -f 200e6 -h 100e6 -n 1e3*
