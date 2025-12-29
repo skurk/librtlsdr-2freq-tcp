@@ -8,12 +8,12 @@ This lib enables TDOA localization with RTL-SDRs, when a reference transmitter i
 <http://www.panoradio-sdr.de/tdoa-transmitter-localization-with-rtl-sdrs/>
 
 ## Purpose of this fork
-This was written while chasing down a major source of QRM to our local 2m FM repeater. The main purpose is having a remote centralized server triggering captures on all nodes simultaneously. At this point the server already knows the duration of the recording, and can automatically collect the recorded files for further processing.
+This was written while chasing down a major source of QRM to our local 2m FM repeater. The main purpose is having a remote centralized server triggering captures on all nodes simultaneously. 
 
 The fork introduces a simple TCP server to the existing librtlsdr-2freq project, which by default listens for connection to TCP port 4500. Since all our nodes were isolated on a wireguard NAT, security was not a priority and hence no authentication is requried to connect to each client.
 
 ## Remote trigger a recording
-To trigger a recording, a remote server connects to the client and sends the string "tdoa:<id>", for example "tdoa:12345". The recording is immediately started, and the output file will be named <id>.dat, for example 12345.dat. For our case scenario we had the server trigger recording on all nodes, wait for a known period, then collected all files using `scp` for processing with a custom made TDoA analyzer.
+To trigger a recording, a remote server connects to the client and sends the string "tdoa:<id>", for example "tdoa:12345". The recording is immediately started, and the output file will be named <id>.dat, for example 12345.dat. For our case scenario we had the server trigger recording on all nodes, wait for a known period, then collected all files using `scp` for processing with a custom made TDoA estimate.
 
 When the recording is completed, the program continues listening for new connections, meaning this could monitor the frequencies indefinitely.
 
